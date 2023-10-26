@@ -1,3 +1,5 @@
+import 'package:finance_pay/features/introduction/introduction_view.dart';
+// import 'package:finance_pay/features/splash/splash_view.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> args) {
@@ -9,13 +11,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('App bar'),
-        ),
-      ),
+      home: IntroductionView(),
     );
   }
 }
