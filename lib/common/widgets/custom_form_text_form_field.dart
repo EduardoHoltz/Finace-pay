@@ -11,6 +11,7 @@ class CustomTextFormField extends StatefulWidget {
   final int? maxLength;
   final Widget? suffixIcon;
   final bool? obscureText;
+  final String? helperText;
 
   // validity
   final String? Function(String?)? validator;
@@ -26,6 +27,7 @@ class CustomTextFormField extends StatefulWidget {
     this.suffixIcon,
     this.obscureText,
     this.validator,
+    this.helperText,
   });
 
   @override
@@ -36,12 +38,31 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   final defaultBorder =
       const OutlineInputBorder(borderSide: BorderSide(color: Colors.black));
 
+  String? _helperText;
+
+  @override
+  void initState() {
+    super.initState();
+    _helperText = widget.helperText;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: TextFormField(
+        onChanged: (value) {
+          if (value.length == 1) {
+            setState(() {
+              _helperText = null;
+            });
+          } else if (value.isNotEmpty) {
+            setState(() {
+              _helperText = widget.helperText;
+            });
+          }
+        },
         // validity
         validator: widget.validator,
         obscureText: widget.obscureText ?? false,
@@ -51,6 +72,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         textCapitalization:
             widget.textCapitalization ?? TextCapitalization.words,
         decoration: InputDecoration(
+          helperMaxLines: 3,
+          helperText: _helperText,
           suffixIcon: widget.suffixIcon,
           hintText: widget.hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,

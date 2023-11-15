@@ -63,6 +63,7 @@ class _SignUpViewState extends State<SignUpView> {
                 PasswordFormField(
                   labelText: "password",
                   hintText: '* * *',
+                  helperText: 'Must have at least 8 characters',
                   validator: (value) {
                     if (value != null && value.isEmpty) {
                       return 'this field cannot be empty';
@@ -95,8 +96,7 @@ class _SignUpViewState extends State<SignUpView> {
 
                 if (valid) {
                   log('continue . . .');
-                }
-                else{
+                } else {
                   log('login error');
                 }
               },
