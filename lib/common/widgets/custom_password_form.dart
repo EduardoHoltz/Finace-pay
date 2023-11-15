@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:finance_pay/common/widgets/custom_form_text_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +9,15 @@ class PasswordFormField extends StatefulWidget {
   final String? Function(String?)? validator;
   final String? helperText;
 
-  const PasswordFormField(
-      {super.key,
-      this.controller,
-      this.padding,
-      this.hintText,
-      this.labelText,
-      this.validator, this.helperText});
+  const PasswordFormField({
+    Key? key,
+    this.controller,
+    this.padding,
+    this.hintText,
+    this.labelText,
+    this.validator,
+    this.helperText,
+  }) : super(key: key);
 
   @override
   State<PasswordFormField> createState() => _PasswordFormFieldState();
@@ -39,10 +39,9 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       suffixIcon: InkWell(
         borderRadius: BorderRadius.circular(23.0),
         onTap: () {
-          log('pressed!');
-          // rebuilding obscureText with 'false' value
+          // Toggle the visibility of the password
           setState(() {
-            isHidden = false;
+            isHidden = !isHidden;
           });
         },
         child: Icon(isHidden ? Icons.visibility : Icons.visibility_off),
