@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:finance_pay/common/constants/app_colors.dart';
 import 'package:finance_pay/common/constants/app_text.dart';
+import 'package:finance_pay/common/utils/validator.dart';
 import 'package:finance_pay/common/widgets/custom_form_text_form_field.dart';
 import 'package:finance_pay/common/widgets/custom_password_form.dart';
 import 'package:finance_pay/common/widgets/custom_text_list_button.dart';
@@ -16,6 +17,7 @@ class SignUpView extends StatefulWidget {
 
 class _SignUpViewState extends State<SignUpView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,48 +40,34 @@ class _SignUpViewState extends State<SignUpView> {
             child: Column(
               children: [
                 // name | email field
-                CustomTextFormField(
+                const CustomTextFormField(
                   labelText: 'name',
                   hintText: 'eduardo',
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return 'this field cannot be empty';
-                    }
-                    return null;
-                  },
+                  validator: Validator.nameValidator,
                 ),
-                CustomTextFormField(
+                const CustomTextFormField(
                   labelText: 'email',
                   hintText: 'eduardo@email.com',
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return 'this field cannot be empty';
-                    }
-                    return null;
-                  },
+                  validator: Validator.emailValidator,
                 ),
 
                 // password field
                 PasswordFormField(
+                  controller: _passwordController,
                   labelText: "password",
                   hintText: '* * *',
-                  helperText: 'Must have at least 8 characters',
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return 'this field cannot be empty';
-                    }
-                    return null;
-                  },
+                  validator: Validator.passwordValidator,
+                  helperText: 'Must have at least 8 characters, 1 capitalize',
                 ),
+
+                // confirm password field
                 PasswordFormField(
                   labelText: "confirm  password",
                   hintText: '* * *',
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return 'this field cannot be empty';
-                    }
-                    return null;
-                  },
+                  validator: (value) => Validator.passwordConfirmValidator(
+                    value,
+                    _passwordController.text,
+                  ),
                 ),
               ],
             ),
